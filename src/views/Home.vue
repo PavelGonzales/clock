@@ -1,18 +1,29 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <Time :serverTime="serverTime"/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import Time from '@/components/Time.vue';
+import axios from 'axios';
+import dayjs from 'dayjs';
 
 export default defineComponent({
   name: 'Home',
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      serverTime: new Date(),
+    }
   },
+  async beforeCreate() {
+    const { data } = await axios.get('http://worldtimeapi.org/api/timezone/Europe/Moscow');
+    this.serverTime = new Date(data.datetime);
+  },
+  components: {
+    Time,
+  },
+  
 });
 </script>
