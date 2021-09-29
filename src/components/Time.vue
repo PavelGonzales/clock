@@ -27,7 +27,7 @@ export default defineComponent({
     this.intervalId = setInterval(this.updateFormattedTime, 16);
   },
   beforeUnmount() {
-    if (this.intervalId) {
+    if (this.intervalId !== -1) {
       clearInterval(this.intervalId);
     }
   },

@@ -47,6 +47,7 @@ type Data = {
   serverData: ServerData;
   offset: string;
   withMilliseconds: boolean;
+  intervalId: number;
 }
 
 export default defineComponent({
@@ -57,26 +58,36 @@ export default defineComponent({
       serverData: {},
       offset: '',
       withMilliseconds: true,
+      intervalId: -1,
     } as Data;
   },
-  async beforeCreate() {
-    try {
-      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const { data: serverData } = await axios.get<ServerData>(`https://worldtimeapi.org/api/timezone/${timezone}`);
-
-      this.serverData = serverData;
-      this.setOffset();
-    } catch (err) {
-      console.log('Failed get serverData', err);
-    }
+  created() {
+    this.getServerData();
+    this.intervalId = setInterval(this.getServerData, 60 * 1000);
   },
   beforeMount() {
     this.withMilliseconds = JSON.parse(localStorage.getItem('withMilliseconds') || 'true');
+  },
+  beforeUnmount() {
+    if (this.intervalId !== -1) {
+      clearInterval(this.intervalId);
+    }
   },
   components: {
     Time,
   },
   methods: {
+    async getServerData() {
+      try {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const { data: serverData } = await axios.get<ServerData>(`https://worldtimeapi.org/api/timezone/${timezone}`);
+
+        this.serverData = serverData;
+        this.setOffset();
+      } catch (err) {
+        console.log('Failed get serverData', err);
+      }
+    },
     setOffset() {
       const offset = Date.now() - +new Date(this.serverData?.datetime || '');
       const ms = dayjs(offset).format('SSS');
