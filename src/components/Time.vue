@@ -10,6 +10,12 @@ import dayjs from 'dayjs';
 
 export default defineComponent({
   name: 'Time',
+  props: {
+    withMilliseconds: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       intervalId: -1,
@@ -27,7 +33,11 @@ export default defineComponent({
   },
   methods: {
     updateFormattedTime() {
-      this.formattedTime = dayjs().format('HH:mm:ss:SSS');
+      if (this.withMilliseconds) {
+        this.formattedTime = dayjs().format('HH:mm:ss:SSS');
+      } else {
+        this.formattedTime = dayjs().format('HH:mm:ss');
+      }
     },
   },
 });

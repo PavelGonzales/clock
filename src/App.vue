@@ -3,7 +3,7 @@
     <div class="toggle-button">
       <NightModeToggler class="toggler-size" :modelValue="!isDarkTheme" @update:modelValue="toggleTheme"/>
     </div>
-    <router-view />
+    <router-view :isDarkTheme="isDarkTheme" />
   </div>
 </template>
 
