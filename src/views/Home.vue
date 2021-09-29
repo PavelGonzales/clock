@@ -108,8 +108,14 @@ export default defineComponent({
 
 <style scoped>
 .root {
-  padding-top: 20vh;
+  padding: 82px 0;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .location-info {
@@ -144,7 +150,7 @@ export default defineComponent({
   font-weight: 600;
   line-height: 1em;
   text-align: center;
-  margin-top: 150px;
+  margin-top: 2em;
   display: flex;
   flex-direction: column;
 }
