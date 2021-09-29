@@ -81,6 +81,8 @@ export default defineComponent({
     } catch (err) {
       console.log('Failed get locationData', err);
       this.locationData.timezone = 'Europe/Moscow';
+      this.locationData.city = 'Moscow';
+      this.locationData.country = 'Russia';
     }
     
     try {
