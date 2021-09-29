@@ -1,12 +1,15 @@
 <template>
   <div :class="['app', {'app--dark': isDarkTheme}]">
-    <button class="toggle-button" @click="toggleTheme">night</button>
+    <div class="toggle-button">
+      <NightModeToggler :modelValue="!isDarkTheme" @update:modelValue="toggleTheme"/>
+    </div>
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import NightModeToggler from '@/components/NightModeToggler.vue';
 
 type Data = {
   isDarkTheme: boolean;
@@ -14,15 +17,23 @@ type Data = {
 
 export default defineComponent({
   name: 'Home',
+  components: {
+    NightModeToggler,
+  },
   data() {
     return {
       isDarkTheme: false,
     } as Data;
   },
+
+  beforeMount() {
+    this.isDarkTheme = JSON.parse(localStorage.getItem('isDarkTheme') || 'false');
+  },
  
   methods: {
     toggleTheme() {
       this.isDarkTheme = !this.isDarkTheme;
+      localStorage.setItem('isDarkTheme', `${this.isDarkTheme}`)
     },
   },
 });
@@ -53,8 +64,8 @@ body {
 
 .toggle-button {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 16px;
+  right: 16px;
   cursor: pointer;
   z-index: 1;
 }
