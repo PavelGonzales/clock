@@ -1,8 +1,8 @@
 <template>
   <div class="root">
-    <div class="location-info">
+    <h1 class="location-info">
       Time in {{ city }} now:
-    </div>
+    </h1>
     <Time class="time" />
     <div class="date-info">
       {{ formattedDate }}, week {{ week }}
@@ -105,11 +105,13 @@ export default defineComponent({
   font-size: 3vw;
   line-height: 1em;
   padding-left: 16px;
+  font-weight: 500;
+  margin: 0;
 }
 
 .time {
   font-size: 15.7vw;
-  font-weight: 600;
+  font-weight: 900;
   line-height: 1em;
 }
 
@@ -118,11 +120,12 @@ export default defineComponent({
   line-height: 1em;
   text-align: right;
   padding-right: 16px;
+  font-weight: 500;
 }
 
 .offset-info {
   font-size: 3vw;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1em;
   text-align: center;
   margin-top: 150px;
