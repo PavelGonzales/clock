@@ -75,11 +75,21 @@ export default defineComponent({
     } as Data;
   },
   async beforeCreate() {
-    const { data: locationData } = await axios.get('https://ip-api.com/json');
-    this.locationData = locationData;
-    const { data: serverData } = await axios.get<ServerData>(`https://worldtimeapi.org/api/timezone/${this.locationData?.timezone}`);
-    this.serverData = serverData;
-    this.setOffset();
+    try {
+      const { data: locationData } = await axios.get('http://ip-api.com/json');
+      this.locationData = locationData;
+    } catch (err) {
+      console.log('Failed get locationData', err);
+      this.locationData.timezone = 'Europe/Moscow';
+    }
+    
+    try {
+      const { data: serverData } = await axios.get<ServerData>(`https://worldtimeapi.org/api/timezone/${this.locationData.timezone}`);
+      this.serverData = serverData;
+    } catch (err) {
+      console.log('Failed get serverData', err);
+      this.setOffset();
+    }
   },
   components: {
     Time,
