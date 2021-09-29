@@ -75,9 +75,9 @@ export default defineComponent({
     } as Data;
   },
   async beforeCreate() {
-    const { data: locationData } = await axios.get('http://ip-api.com/json');
+    const { data: locationData } = await axios.get('https://ip-api.com/json');
     this.locationData = locationData;
-    const { data: serverData } = await axios.get<ServerData>(`http://worldtimeapi.org/api/timezone/${this.locationData?.timezone}`);
+    const { data: serverData } = await axios.get<ServerData>(`https://worldtimeapi.org/api/timezone/${this.locationData?.timezone}`);
     this.serverData = serverData;
     this.setOffset();
   },
