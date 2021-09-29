@@ -1,7 +1,7 @@
 <template>
   <div :class="['app', {'app--dark': isDarkTheme}]">
     <div class="toggle-button">
-      <NightModeToggler :modelValue="!isDarkTheme" @update:modelValue="toggleTheme"/>
+      <NightModeToggler class="toggler-size" :modelValue="!isDarkTheme" @update:modelValue="toggleTheme"/>
     </div>
     <router-view />
   </div>
@@ -68,5 +68,12 @@ body {
   right: 16px;
   cursor: pointer;
   z-index: 1;
+}
+
+@media screen and (max-width: 960px) {
+  .toggler-size {
+    --width: 65px !important;
+    --height: 25px !important;
+  }
 }
 </style>
