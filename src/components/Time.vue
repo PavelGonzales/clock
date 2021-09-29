@@ -1,10 +1,6 @@
 <template>
-  <div class="hello">
+  <div class="time">
     {{ formattedTime }}
-    <br>
-    {{ formattedDate }}
-    <br>
-    offset {{ offset }} ms
   </div>
 </template>
 
@@ -20,9 +16,6 @@ export default defineComponent({
       formattedTime: '',
     }
   },
-  props: {
-    serverTime: [String, Number, Date],
-  },
   created() {
     this.updateFormattedTime();
     this.intervalId = setInterval(this.updateFormattedTime, 16);
@@ -37,17 +30,5 @@ export default defineComponent({
       this.formattedTime = dayjs().format('HH:mm:ss:SSS');
     },
   },
-  computed: {
-    offset() {
-      return dayjs(Date.now() - +new Date(this.serverTime || '')).format('SSS');
-    },
-    formattedDate() {
-      return dayjs().format('DD MMMM YYYY')
-    }
-  },
 });
 </script>
-
-<style scoped>
-
-</style>
