@@ -110,6 +110,7 @@ export default defineComponent({
 <style scoped>
 .root {
   padding-top: 50px;
+  padding-top: 20vh;
 }
 
 .location-info {
@@ -133,6 +134,7 @@ export default defineComponent({
 
 .offset-info {
   font-size: 3vw;
+  font-weight: 500;
   line-height: 1em;
   text-align: center;
   margin-top: 150px;
