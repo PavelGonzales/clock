@@ -88,9 +88,9 @@ export default defineComponent({
     try {
       const { data: serverData } = await axios.get<ServerData>(`https://worldtimeapi.org/api/timezone/${this.locationData.timezone}`);
       this.serverData = serverData;
+      this.setOffset();
     } catch (err) {
       console.log('Failed get serverData', err);
-      this.setOffset();
     }
   },
   components: {
