@@ -1,7 +1,7 @@
 <template>
   <div class="root">
     <div class="location-info">
-      Time in {{ locationData.city }}, {{ locationData.country }} now:
+      Time in {{ city }} now:
     </div>
     <Time class="time" />
     <div class="date-info">
@@ -42,26 +42,8 @@ type ServerData = {
   utc_offset: string;
 }
 
-type LocationData = {
-  status: string;
-  country: string;
-  countryCode: string;
-  region: string;
-  regionName: string;
-  city: string;
-  zip: string;
-  lat: number;
-  lon: number;
-  timezone: string;
-  isp: string;
-  org: string;
-  as: string;
-  query: string;
-}
-
 type Data = {
   serverData: ServerData;
-  locationData: LocationData;
   offset: string;
 }
 
@@ -70,23 +52,14 @@ export default defineComponent({
   data() {
     return {
       serverData: {},
-      locationData: {},
       offset: '',
     } as Data;
   },
   async beforeCreate() {
     try {
-      const { data: locationData } = await axios.get('http://ip-api.com/json');
-      this.locationData = locationData;
-    } catch (err) {
-      console.log('Failed get locationData', err);
-      this.locationData.timezone = 'Europe/Moscow';
-      this.locationData.city = 'Moscow';
-      this.locationData.country = 'Russia';
-    }
-    
-    try {
-      const { data: serverData } = await axios.get<ServerData>(`https://worldtimeapi.org/api/timezone/${this.locationData.timezone}`);
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const { data: serverData } = await axios.get<ServerData>(`https://worldtimeapi.org/api/timezone/${timezone}`);
+
       this.serverData = serverData;
       this.setOffset();
     } catch (err) {
@@ -114,6 +87,9 @@ export default defineComponent({
     },
     week() {
       return dayjs().week() - 1;
+    },
+    city() {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone.split('/')[1];
     },
   },
 });
