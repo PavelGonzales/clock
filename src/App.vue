@@ -4,12 +4,14 @@
       <NightModeToggler class="toggler-size" :modelValue="!isDarkTheme" @update:modelValue="toggleTheme"/>
     </div>
     <router-view :isDarkTheme="isDarkTheme" />
+    <Footer />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import NightModeToggler from '@/components/NightModeToggler.vue';
+import Footer from '@/components/Footer.vue';
 
 type Data = {
   isDarkTheme: boolean;
@@ -19,6 +21,7 @@ export default defineComponent({
   name: 'Home',
   components: {
     NightModeToggler,
+    Footer,
   },
   data() {
     return {
@@ -49,12 +52,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #202023;
+  position: relative;
 }
 
 .app {
   width: 100vw;
   height: 100vh;
   transition: all 0.1s ease-in-out;
+  overflow: hidden;
 }
 
 .app--dark {
