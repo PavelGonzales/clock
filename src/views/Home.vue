@@ -64,6 +64,13 @@ export default defineComponent({
   created() {
     this.getServerData();
     this.intervalId = setInterval(this.getServerData, 60 * 1000);
+    // TODO Fix it!!!
+    const dateNow = dayjs();
+    (this as any).$gtag.event('session info', {
+      date: dateNow.format('DD MM YYYY'),
+      time: dateNow.format('HH:mm:ss'),
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    });
   },
   beforeMount() {
     this.withMilliseconds = JSON.parse(localStorage.getItem('withMilliseconds') || 'true');

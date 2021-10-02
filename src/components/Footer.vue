@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    Made with 💙 by <a class="footer__link" href="https://pavelgonzales.com/" target="_blank">Pavel Gonzales</a>
+    Made with 💙 by <a class="footer__link" href="https://pavelgonzales.com/" target="_blank" @click="onLinkClick">Pavel Gonzales</a>
   </footer>
 </template>
 
@@ -9,6 +9,13 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Footer',
+
+  methods: {
+    onLinkClick() {
+      // TODO Fix it!!!
+      (this as any).$gtag.event('click', { label: 'pavelgonzales.com' });
+    },
+  },
 });
 </script>
 
