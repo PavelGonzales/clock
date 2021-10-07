@@ -3,7 +3,7 @@
     <div class="menu-button">
       <Button icon="pi pi-bars" class="menu-button--white p-button-text" @click="visibleSidebar = true" />
     </div>
-    <Sidebar v-model:visible="visibleSidebar" position="right" :class="{'sidebar--dark': isDarkTheme}">
+    <Sidebar v-model:visible="visibleSidebar" :showCloseIcon="false" position="right" :class="{'sidebar--dark': isDarkTheme}">
       <SidebarContent />
     </Sidebar>
 
