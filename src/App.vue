@@ -3,7 +3,7 @@
     <div class="menu-button">
       <Button icon="pi pi-bars" class="menu-button--white p-button-text" @click="visibleSidebar = true" />
     </div>
-    <Sidebar v-model:visible="visibleSidebar" position="right">
+    <Sidebar v-model:visible="visibleSidebar" position="right" :class="{'sidebar--dark': isDarkTheme}">
       <SidebarContent />
     </Sidebar>
 
@@ -88,6 +88,15 @@ body {
 }
 
 .menu-button--white {
+  color: #202023 !important;
+}
+
+.app--dark .menu-button--white {
+  color: #fff !important;
+}
+
+.sidebar--dark {
+  background-color: #202023 !important;
   color: #fff !important;
 }
 </style>
