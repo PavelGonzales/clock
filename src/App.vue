@@ -1,8 +1,12 @@
 <template>
   <div :class="['app', {'app--dark': isDarkTheme}]">
-    <div class="toggle-button">
-      <NightModeToggler class="toggler-size" :modelValue="!isDarkTheme" @update:modelValue="toggleTheme"/>
+    <div class="menu-button">
+      <Button icon="pi pi-bars" class="menu-button--white p-button-text" @click="visibleSidebar = true" />
     </div>
+    <Sidebar v-model:visible="visibleSidebar" position="right">
+      <SidebarContent />
+    </Sidebar>
+
     <router-view :isDarkTheme="isDarkTheme" />
     <Footer />
   </div>
@@ -10,34 +14,43 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import NightModeToggler from '@/components/NightModeToggler.vue';
 import Footer from '@/components/Footer.vue';
+import Sidebar from 'primevue/sidebar';
+import Button from 'primevue/button';
+import SidebarContent from '@/components/SidebarContent.vue';
+import { mapState, mapActions } from 'vuex';
 
 type Data = {
-  isDarkTheme: boolean;
+  visibleSidebar: boolean;
 }
 
 export default defineComponent({
   name: 'Home',
   components: {
-    NightModeToggler,
     Footer,
+    Sidebar,
+    Button,
+    SidebarContent,
   },
   data() {
     return {
-      isDarkTheme: false,
+      visibleSidebar: false,
     } as Data;
   },
 
-  beforeMount() {
-    this.isDarkTheme = JSON.parse(localStorage.getItem('isDarkTheme') || 'false');
+  computed: {
+    ...mapState({
+      isDarkTheme: (state: any) => state.settings.isDarkTheme,
+    }),
   },
- 
+
+  beforeMount() {
+    this.setIsDarkTheme(JSON.parse(localStorage.getItem('isDarkTheme') || 'false'));
+    this.setWithMilliseconds(JSON.parse(localStorage.getItem('withMilliseconds') || 'false'));
+  },
+
   methods: {
-    toggleTheme() {
-      this.isDarkTheme = !this.isDarkTheme;
-      localStorage.setItem('isDarkTheme', `${this.isDarkTheme}`)
-    },
+    ...mapActions(['setIsDarkTheme', 'setWithMilliseconds']),
   },
 });
 </script>
@@ -67,18 +80,14 @@ body {
   color: #fff;
 }
 
-.toggle-button {
+.menu-button {
   position: absolute;
   top: 16px;
   right: 16px;
-  cursor: pointer;
-  z-index: 1;
+  z-index: 1000;
 }
 
-@media screen and (max-width: 960px) {
-  .toggler-size {
-    --width: 65px !important;
-    --height: 25px !important;
-  }
+.menu-button--white {
+  color: #fff !important;
 }
 </style>
